@@ -1,4 +1,4 @@
-package Entities
+package entities
 
 type playerEntity struct {
 	firstName string
