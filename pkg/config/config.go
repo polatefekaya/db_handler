@@ -6,5 +6,5 @@ type AppConfig struct {
 }
 
 type AppCache struct {
-	PlayerModel *models.RootModel
+	PlayerModel *models.Root
 }
