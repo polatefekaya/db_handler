@@ -1,6 +1,7 @@
 package main
 
 import (
+	"DatabaseHandler/pkg/spesific/player"
 	"database/sql"
 	"fmt"
 	_ "github.com/lib/pq"
@@ -41,6 +42,9 @@ func main() {
 	}
 	fmt.Printf("name: %s", name)
 	fmt.Printf("price: %s", price)
+
+	p := player.GetPlayerWithId(605)
+	log.Println(&p)
 }
 
 type Product struct {
