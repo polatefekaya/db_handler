@@ -5,5 +5,9 @@ func AddTeam() {
 }
 
 func AddLeague() {
-	
+
+}
+
+func AddPlayer() {
+
 }

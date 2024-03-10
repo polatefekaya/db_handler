@@ -1,10 +1,13 @@
 package config
 
-import "DatabaseHandler/pkg/data/models"
+import (
+	"DatabaseHandler/pkg/spesific/player"
+)
 
 type AppConfig struct {
+	conn string
 }
 
 type AppCache struct {
-	PlayerModel *models.Root
+	PlayerModel *player.PlayerRoot
 }
