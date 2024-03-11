@@ -1,50 +1,46 @@
 package player
 
-import (
-	"time"
-)
-
 type PlayerRoot struct {
-	responses []Response `json:"response"`
+	Responses []Response `json:"response"`
 }
 
 type Response struct {
-	player     Player      `json:"player"`
-	statistics []Statistic `json:"statistics"`
+	Player     Player      `json:"player"`
+	Statistics []Statistic `json:"statistics"`
 }
 
 type Player struct {
-	firstName   string `json:"firstname"`
-	lastName    string `json:"lastname"`
-	age         int    `json:"age"`
-	birth       Birth  `json:"birth"`
-	nationality string `json:"nationality"`
-	height      string `json:"height"`
-	weight      string `json:"weight"`
-	isInjured   bool   `json:"injured"`
-	photoUrl    string `json:"photo"`
+	FirstName   string `json:"firstname"`
+	LastName    string `json:"lastname"`
+	Age         int    `json:"age"`
+	Birth       Birth  `json:"birth"`
+	Nationality string `json:"nationality"`
+	Height      string `json:"height"`
+	Weight      string `json:"weight"`
+	IsInjured   bool   `json:"injured"`
+	PhotoUrl    string `json:"photo"`
 }
 
 type Birth struct {
-	date    time.Time `json:"date"`
-	place   string    `json:"place"`
-	country string    `json:"country"`
+	Date    string `json:"date"`
+	Place   string `json:"place"`
+	Country string `json:"country"`
 }
 
 type Statistic struct {
-	team       Team       `json:"team"`
-	leauge     League     `json:"leauge"`
-	game       Game       `json:"games"`
-	substitute Substitute `json:"substitutes"`
-	shot       Shot       `json:"shots"`
-	goal       Goal       `json:"goals"`
-	pass       Pass       `json:"passes"`
-	tackle     Tackle     `json:"tackles"`
-	duel       Duel       `json:"duels"`
-	dribble    Dribble    `json:"dribbles"`
-	foul       Foul       `json:"fouls"`
-	card       Card       `json:"cards"`
-	penalty    Penalty    `json:"penalty"`
+	Team       Team       `json:"team"`
+	League     League     `json:"league"`
+	Game       Game       `json:"games"`
+	Substitute Substitute `json:"substitutes"`
+	Shot       Shot       `json:"shots"`
+	Goal       Goal       `json:"goals"`
+	Pass       Pass       `json:"passes"`
+	Tackle     Tackle     `json:"tackles"`
+	Duel       Duel       `json:"duels"`
+	Dribble    Dribble    `json:"dribbles"`
+	Foul       Foul       `json:"fouls"`
+	Card       Card       `json:"cards"`
+	Penalty    Penalty    `json:"penalty"`
 }
 
 type Team struct {

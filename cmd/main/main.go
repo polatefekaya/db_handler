@@ -11,6 +11,17 @@ import (
 func main() {
 	//var app config.AppConfig
 
+	req := player.GetPlayerWithId(3)
+	fmt.Println(req.Responses[0].Player.FirstName)
+}
+
+type Product struct {
+	Name  string
+	Price string
+}
+
+func dbCall() {
+
 	var connStr string
 	connStr = "postgres://postgres:root@localhost:5432/goptest?sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
@@ -43,13 +54,6 @@ func main() {
 	fmt.Printf("name: %s", name)
 	fmt.Printf("price: %s", price)
 
-	p := player.GetPlayerWithId(605)
-	log.Println(&p)
-}
-
-type Product struct {
-	Name  string
-	Price string
 }
 
 // instead of this, use migrations

@@ -1,4 +1,4 @@
-package handlers
+package pkg
 
 import (
 	"DatabaseHandler/pkg/config"

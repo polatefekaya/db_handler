@@ -6,12 +6,11 @@ import (
 	"net/http"
 )
 
-func GetRequest(url string) *[]byte {
-	req := create("GET", url)
+func GetRequest(api *Api) *[]byte {
 
-	headers(req, map[string]string{
-		"X-Header": "value",
-	})
+	req := create("GET", api)
+
+	headers(req, api.Headers)
 
 	res := call(req)
 
@@ -24,16 +23,17 @@ func PostRequest() {
 
 }
 
-func create(t string, u string) *http.Request {
-	req, err := http.NewRequest(t, u, nil)
+func create(t string, a *Api) *http.Request {
+	req, err := http.NewRequest(t, a.Url, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 	return req
+
 }
 
-func headers(r *http.Request, m map[string]string) {
-	for k, v := range m {
+func headers(r *http.Request, m *map[string]string) {
+	for k, v := range *m {
 		r.Header.Add(k, v)
 	}
 }
@@ -43,7 +43,7 @@ func call(r *http.Request) *http.Response {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer res.Body.Close()
+	//defer res.Body.Close()
 	return res
 }
 
@@ -52,5 +52,6 @@ func read(r *http.Response) *[]byte {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer r.Body.Close()
 	return &body
 }
