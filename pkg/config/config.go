@@ -1,13 +1,15 @@
 package config
 
 import (
-	"DatabaseHandler/pkg/spesific/player"
+	"DatabaseHandler/pkg/data/models"
+	"DatabaseHandler/pkg/usecases"
 )
 
 type AppConfig struct {
-	conn string
+	Conn     string
+	Football *usecases.FootballUsecase
 }
 
 type AppCache struct {
-	PlayerModel *player.PlayerRoot
+	PlayerModel *models.PlayerRoot
 }

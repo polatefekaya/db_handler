@@ -10,12 +10,12 @@ import (
 
 // Get model give entity
 func Sample() {
-	a := Convert(models.PlayerRoot{}).(entities.PlayerEntity)
+	a := Generate(models.PlayerRoot{}).(entities.PlayerEntity)
 	log.Println(a.FirstName)
 
 }
 
-func Convert[T generics.EntityConvertTypes](i T) interface{} {
+func Generate[T generics.EntityConvertTypes](i T) interface{} {
 	a := generics.EntityTypes[reflect.TypeOf(i)]
 	if a == nil {
 		log.Fatal("Given parameter can not be a nil value")
