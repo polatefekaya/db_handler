@@ -5,5 +5,4 @@ type Entity struct {
 }
 
 type IEntity interface {
-	ToEntity()
 }

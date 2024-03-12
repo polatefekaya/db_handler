@@ -9,5 +9,5 @@ func AddLeague() {
 }
 
 func AddPlayer() {
-	En.ToEntity()
+
 }

@@ -1,7 +1,9 @@
 package main
 
 import (
-	"DatabaseHandler/pkg/spesific/player"
+	"DatabaseHandler/pkg/data/entities"
+	"DatabaseHandler/pkg/handlers"
+	"DatabaseHandler/pkg/usecases"
 	"database/sql"
 	"fmt"
 	_ "github.com/lib/pq"
@@ -11,8 +13,12 @@ import (
 func main() {
 	//var app config.AppConfig
 
-	req := player.GetPlayerWithId(3)
-	fmt.Println(req.Responses[0].Player.FirstName)
+	req := usecases.GetPlayerWithId(3)
+
+	a := handlers.Convert(*req).(entities.PlayerEntity)
+	a.FirstName = req.Responses[0].Player.FirstName
+	log.Println(a.FirstName)
+
 }
 
 type Product struct {
