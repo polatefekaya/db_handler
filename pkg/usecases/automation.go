@@ -1,5 +1,13 @@
 package usecases
 
-func AutomatePlayer() {
+type AutomationUseCase struct {
+	FootballUsecase *FootballUsecase
+}
+
+func NewAutomationUseCase() *AutomationUseCase {
+	return &AutomationUseCase{}
+}
+
+func (m *AutomationUseCase) AutomatePlayer() {
 
 }

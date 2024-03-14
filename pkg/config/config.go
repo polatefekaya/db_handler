@@ -6,8 +6,9 @@ import (
 )
 
 type AppConfig struct {
-	Conn     string
-	Football *usecases.FootballUsecase
+	Conn       string
+	Football   *usecases.FootballUsecase
+	Automation *usecases.AutomationUseCase
 }
 
 type AppCache struct {

@@ -13,6 +13,9 @@ func main() {
 
 	app.Football = usecases.NewFootballUsecase()
 
+	app.Automation = usecases.NewAutomationUseCase()
+	app.Automation.FootballUsecase = app.Football
+
 	req := app.Football.GetPlayerWithId(3)
 
 	a := handlers.Generate(*req).(entities.PlayerEntity)
