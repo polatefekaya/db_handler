@@ -1,10 +1,10 @@
 package player
 
 import (
-	"DatabaseHandler/pkg/data/entities"
-	"DatabaseHandler/pkg/data/models"
+	"DatabaseHandler/pkg/data/entities/Players"
+	Players2 "DatabaseHandler/pkg/data/models/Players"
 )
 
 type IPlayer interface {
-	ToPlayerEntity(pr *models.PlayerRoot) *entities.PlayerEntity
+	ToPlayerEntity(pr *Players2.PlayerRoot) *Players.PlayerEntity
 }

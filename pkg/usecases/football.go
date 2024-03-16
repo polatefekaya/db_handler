@@ -1,7 +1,7 @@
 package usecases
 
 import (
-	m "DatabaseHandler/pkg/data/models"
+	m "DatabaseHandler/pkg/data/models/Players"
 	h "DatabaseHandler/pkg/handlers"
 	"fmt"
 )

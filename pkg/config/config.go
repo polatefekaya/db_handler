@@ -1,7 +1,7 @@
 package config
 
 import (
-	"DatabaseHandler/pkg/data/models"
+	"DatabaseHandler/pkg/data/models/Players"
 	"DatabaseHandler/pkg/usecases"
 )
 
@@ -12,5 +12,5 @@ type AppConfig struct {
 }
 
 type AppCache struct {
-	PlayerModel *models.PlayerRoot
+	PlayerModel *Players.PlayerRoot
 }

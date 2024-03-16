@@ -2,7 +2,7 @@ package main
 
 import (
 	"DatabaseHandler/pkg/config"
-	"DatabaseHandler/pkg/data/entities"
+	"DatabaseHandler/pkg/data/entities/Players"
 	"DatabaseHandler/pkg/handlers"
 	"DatabaseHandler/pkg/usecases"
 	"log"
@@ -18,8 +18,13 @@ func main() {
 
 	req := app.Football.GetPlayerWithId(3)
 
-	a := handlers.Generate(*req).(entities.PlayerEntity)
+	a := handlers.Generate(*req).(Players.PlayerEntity)
+
+	b := req.Responses[0].Player.ToEntity()
+	c := req.Responses[0].Statistics[0].Team.ToEntity()
+
 	a.FirstName = req.Responses[0].Player.FirstName
-	log.Println(a.FirstName)
+	log.Println(b.Name)
+	log.Println(c.Name)
 
 }

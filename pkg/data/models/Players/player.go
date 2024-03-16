@@ -1,4 +1,4 @@
-package models
+package Players
 
 type PlayerRoot struct {
 	Responses []Response `json:"response"`
@@ -10,6 +10,8 @@ type Response struct {
 }
 
 type Player struct {
+	Id          int    `json:"id"`
+	Name        string `json:"name"`
 	FirstName   string `json:"firstname"`
 	LastName    string `json:"lastname"`
 	Age         int    `json:"age"`
@@ -22,9 +24,9 @@ type Player struct {
 }
 
 type Birth struct {
-	Date    string `json:"date"`
-	Place   string `json:"place"`
-	Country string `json:"country"`
+	Date    CustomTime `json:"date"`
+	Place   string     `json:"place"`
+	Country string     `json:"country"`
 }
 
 type Statistic struct {

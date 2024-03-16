@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"DatabaseHandler/pkg/data/entities"
-	"DatabaseHandler/pkg/data/models"
+	"DatabaseHandler/pkg/data/entities/Players"
+	Players2 "DatabaseHandler/pkg/data/models/Players"
 	"DatabaseHandler/pkg/generics"
 	"log"
 	"reflect"
@@ -10,7 +10,7 @@ import (
 
 // Get model give entity
 func Sample() {
-	a := Generate(models.PlayerRoot{}).(entities.PlayerEntity)
+	a := Generate(Players2.PlayerRoot{}).(Players.PlayerEntity)
 	log.Println(a.FirstName)
 
 }
