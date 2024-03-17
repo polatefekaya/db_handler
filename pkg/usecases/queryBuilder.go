@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"DatabaseHandler/pkg/data/models/query"
 	"log"
 )
 
@@ -17,5 +18,5 @@ func (m *QueryBuilder) Build(player *query.Player) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	q
+	return q
 }

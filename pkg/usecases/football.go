@@ -4,25 +4,28 @@ import (
 	m "DatabaseHandler/pkg/data/models/Players"
 	q "DatabaseHandler/pkg/data/models/query"
 	h "DatabaseHandler/pkg/handlers"
-	"fmt"
+	"log"
+	"strconv"
 )
 
 type FootballUsecase struct {
 	Query *q.Player
 }
 
-type query *q.Player
+var pq *q.Player
 
 func NewFootballUsecase() *FootballUsecase {
+	pq = q.NewPlayer()
 	return &FootballUsecase{}
 }
 
 func (f *FootballUsecase) GetPlayerWithId(id int) *m.PlayerRoot {
-	sa := h.CreateSportsApi("faa42408eae63bf0cf0dfb0ff4e1678d",
-		fmt.Sprintf("players?id=%d&season=%d", id, 2023))
-
-	sa := h.CreateSportsApi("faa42408eae63bf0cf0dfb0ff4e1678d", query{})
-
+	query, err := pq.Generate(strconv.Itoa(id), strconv.Itoa(2023), "").Build()
+	if err != nil {
+		log.Fatal(err)
+	}
+	sa := h.CreateSportsApi("faa42408eae63bf0cf0dfb0ff4e1678d", query)
+	log.Println("Query", query)
 	body := h.GetRequest(sa)
 
 	//faa42408eae63bf0cf0dfb0ff4e1678d

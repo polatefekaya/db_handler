@@ -16,7 +16,7 @@ type IPlayers interface {
 
 type Player struct {
 	PlayerId string
-	Base     string "players"
+	Base     string
 	Season   string
 	Search   string
 }
@@ -34,9 +34,11 @@ func (m *Player) Generate(playerId, season, search string) *Player {
 }
 
 func (m *Player) Build() (string, error) {
+	m.Base = "players"
+
 	sb := strings.Builder{}
-	sb.WriteByte('?')
 	sb.WriteString(m.Base)
+	sb.WriteByte('?')
 
 	if strings.Compare(m.PlayerId, "") == 0 {
 		return "", errors.New("no playerId value provided for query")
@@ -56,7 +58,7 @@ func (m *Player) Build() (string, error) {
 		sb.WriteString("search=")
 		sb.WriteString(m.Search)
 	}
-	sb.WriteByte('/')
+	//sb.WriteByte('/')
 
 	return sb.String(), nil
 }

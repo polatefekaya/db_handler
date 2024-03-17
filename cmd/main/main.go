@@ -3,7 +3,6 @@ package main
 import (
 	"DatabaseHandler/pkg/config"
 	"DatabaseHandler/pkg/data/entities/Players"
-	"DatabaseHandler/pkg/data/models/query"
 	"DatabaseHandler/pkg/handlers"
 	"DatabaseHandler/pkg/usecases"
 	"log"
@@ -28,10 +27,4 @@ func main() {
 	log.Println(b.Name)
 	log.Println(c.Name)
 
-	q := query.NewQuery()
-	pl := q.NewPlayers()
-	pl.Player.Generate("", "", "")
-
-	qb := usecases.NewQueryBuilder()
-	qb.Build(pl.Player)
 }
