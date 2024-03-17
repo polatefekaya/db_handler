@@ -5,6 +5,7 @@ import (
 	q "DatabaseHandler/pkg/data/models/query"
 	h "DatabaseHandler/pkg/handlers"
 	"log"
+	"os"
 	"strconv"
 )
 
@@ -24,7 +25,9 @@ func (f *FootballUsecase) GetPlayerWithId(id int) *m.PlayerRoot {
 	if err != nil {
 		log.Fatal(err)
 	}
-	sa := h.CreateSportsApi("faa42408eae63bf0cf0dfb0ff4e1678d", query)
+	key := os.Getenv("SportsApiKey")
+	log.Println(key)
+	sa := h.CreateSportsApi(key, query)
 	log.Println("Query", query)
 	body := h.GetRequest(sa)
 
