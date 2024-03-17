@@ -30,7 +30,7 @@ func main() {
 
 	q := query.NewQuery()
 	pl := q.NewPlayers()
-	pl.Player.Generate("", "", "", "", "")
+	pl.Player.Generate("", "", "")
 
 	qb := usecases.NewQueryBuilder()
 	qb.Build(pl.Player)

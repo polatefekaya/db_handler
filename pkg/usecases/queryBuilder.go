@@ -1,6 +1,8 @@
 package usecases
 
-import "DatabaseHandler/pkg/data/models/query"
+import (
+	"log"
+)
 
 type QueryBuilder struct {
 	Query *query.Query
@@ -11,6 +13,9 @@ func NewQueryBuilder() *QueryBuilder {
 }
 
 func (m *QueryBuilder) Build(player *query.Player) string {
-	qs := player.Generate(",", ",", ",", ",", ",")
-
+	q, err := player.Generate(",", ",", ",").Build()
+	if err != nil {
+		log.Fatal(err)
+	}
+	q
 }
