@@ -2,6 +2,7 @@ package usecases
 
 type AutomationUseCase struct {
 	FootballUsecase *FootballUsecase
+	Process         *Process
 }
 
 func NewAutomationUseCase() *AutomationUseCase {
@@ -9,5 +10,5 @@ func NewAutomationUseCase() *AutomationUseCase {
 }
 
 func (m *AutomationUseCase) AutomatePlayer() {
-
+	m.Process.Start()
 }

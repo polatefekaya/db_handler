@@ -13,3 +13,11 @@ var EntityTypes = map[reflect.Type]reflect.Type{
 type EntityConvertTypes interface {
 	Players2.PlayerRoot | Players2.Player
 }
+
+type PlayersEntities interface {
+	*Players.PlayerEntity | *Players.TeamEntity | *Players.LeagueEntity | *Players.StatisticEntity
+}
+
+type PlayersModel interface {
+	Players2.PlayerRoot | Players2.Response
+}

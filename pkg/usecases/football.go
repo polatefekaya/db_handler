@@ -6,7 +6,7 @@ import (
 	h "DatabaseHandler/pkg/handlers"
 	"log"
 	"os"
-	"strconv"
+	sc "strconv"
 )
 
 type FootballUsecase struct {
@@ -21,17 +21,18 @@ func NewFootballUsecase() *FootballUsecase {
 }
 
 func (f *FootballUsecase) GetPlayerWithId(id int) *m.PlayerRoot {
-	query, err := pq.Generate(strconv.Itoa(id), strconv.Itoa(2023), "").Build()
+	query, err := pq.Generate(sc.Itoa(id), sc.Itoa(2023), "").Build()
 	if err != nil {
 		log.Fatal(err)
 	}
-	key := os.Getenv("SportsApiKey")
-	log.Println(key)
+
+	key := os.Getenv("SPORTS_API_KEY")
+
 	sa := h.CreateSportsApi(key, query)
 	log.Println("Query", query)
+
 	body := h.GetRequest(sa)
 
-	//faa42408eae63bf0cf0dfb0ff4e1678d
 	var pr m.PlayerRoot
 	h.FromJson(body, &pr)
 

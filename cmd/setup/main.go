@@ -9,7 +9,7 @@ import (
 func main() {
 	fmt.Println("Welcome to setup")
 	fmt.Println("Please write your SportsApiKey:")
-	err := os.Setenv("SportsApiKey", GetUserInput())
+	err := os.Setenv("SPORTS_API_KEY", GetUserInput())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -17,6 +17,10 @@ func main() {
 
 func GetUserInput() string {
 	var key string
-	fmt.Scanln(&key)
+	_, err := fmt.Scanln(&key)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	return key
 }
