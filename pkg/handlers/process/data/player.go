@@ -3,9 +3,33 @@ package data
 import (
 	e "DatabaseHandler/pkg/data/entities/Players"
 	"DatabaseHandler/pkg/data/models/Players"
+	proc "DatabaseHandler/pkg/interfaces/process"
+	"errors"
+	"fmt"
+	"log"
 )
 
 type PlayerProcessDataHandler struct {
+}
+
+type IPlayerDataProcess interface {
+	StartData(root *Players.PlayerRoot)
+	proc.IPlayerProcess
+}
+
+type tempEntities struct {
+	*e.TeamEntity
+	*e.LeagueEntity
+	*e.DribbleEntity
+	*e.GoalEntity
+	*e.CardEntity
+	*e.DuelEntity
+	*e.FoulEntity
+	*e.GameEntity
+	*e.PassEntity
+	*e.PenaltyEntity
+	*e.SubstituteEntity
+	*e.TackleEntity
 }
 
 func (m *PlayerProcessDataHandler) StartData(root *Players.PlayerRoot) {
@@ -71,27 +95,42 @@ func penaltyData(root *Players.PlayerRoot, page int) *e.PenaltyEntity {
 }
 
 func statisticData(root *Players.PlayerRoot) {
-	var sd e.StatisticEntity
-	sl := len(root.Responses[0].Statistics)
-	for i := range sl {
-		processBuffer(root, i)
+	es, err := entitiesProcess(root)
+	if err != nil {
+		log.Fatal(err)
 	}
-	sd.TeamId = 12
+
 }
 
-func processBuffer(root *Players.PlayerRoot, i int) {
-	teamData(root, i)
-	leagueData(root, i)
-	dribbleData(root, i)
-	goalData(root, i)
-	cardData(root, i)
-	duelData(root, i)
-	foulData(root, i)
-	gameData(root, i)
-	passData(root, i)
-	penaltyData(root, i)
-	substituteData(root, i)
-	tackleData(root, i)
+func entitiesProcess(root *Players.PlayerRoot) ([]*tempEntities, error) {
+	sl := len(root.Responses[0].Statistics)
+	es := make([]*tempEntities, 0, sl)
+	for i := range sl {
+		es = append(es, processBuffer(root, i))
+	}
+
+	if len(es) != sl {
+		return nil, errors.New(fmt.Sprintf("Entities Process couldn't process everything. Expected Len: %d, Got: %d", sl, len(es)))
+	}
+	return es, nil
+}
+
+func processBuffer(root *Players.PlayerRoot, i int) *tempEntities {
+	seo := tempEntities{
+		TeamEntity:       teamData(root, i),
+		LeagueEntity:     leagueData(root, i),
+		DribbleEntity:    dribbleData(root, i),
+		GoalEntity:       goalData(root, i),
+		CardEntity:       cardData(root, i),
+		DuelEntity:       duelData(root, i),
+		FoulEntity:       foulData(root, i),
+		GameEntity:       gameData(root, i),
+		PassEntity:       passData(root, i),
+		PenaltyEntity:    penaltyData(root, i),
+		SubstituteEntity: substituteData(root, i),
+		TackleEntity:     tackleData(root, i),
+	}
+	return &seo
 }
 
 func substituteData(root *Players.PlayerRoot, page int) *e.SubstituteEntity {

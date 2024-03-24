@@ -1,19 +1,15 @@
 package process
 
 import (
+	"DatabaseHandler/pkg/handlers/process/data"
+	"DatabaseHandler/pkg/handlers/process/db"
 	"DatabaseHandler/pkg/handlers/process/request"
 )
 
 type PlayerProcess struct {
-	Db      IPlayerProcess
-	Data    IPlayerProcess
+	Db      db.IPlayerDbProcess
+	Data    data.IPlayerDataProcess
 	Request *request.PlayerProcessRequestHandler
-}
-
-type IPlayerProcess interface {
-	PlayerProcess()
-	TeamProcess()
-	LeagueProcess()
 }
 
 func NewPlayerProcess() *PlayerProcess {
@@ -24,5 +20,5 @@ func (m *PlayerProcess) ProcessPlayer(id int) {
 	pr := m.Request.GetPlayerWithId(id)
 	m.Data.StartData(pr)
 	m.Data.LeagueProcess()
-	m.Db.Start()
+	m.Db.StartDb()
 }
