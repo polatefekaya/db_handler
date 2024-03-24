@@ -99,6 +99,7 @@ func statisticData(root *Players.PlayerRoot) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	//uuid.New()
 
 }
 
