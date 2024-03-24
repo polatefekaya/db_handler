@@ -15,6 +15,17 @@ func (m *PlayerProcessDataHandler) StartData(root *Players.PlayerRoot) {
 	statisticData(root)
 }
 
+func (m *PlayerProcessDataHandler) PlayerProcess() {
+}
+
+func (m *PlayerProcessDataHandler) LeagueProcess() {
+
+}
+
+func (m *PlayerProcessDataHandler) TeamProcess() {
+
+}
+
 func playerData(root *Players.PlayerRoot) *e.PlayerEntity {
 	return root.Responses[0].Player.ToEntity()
 }
