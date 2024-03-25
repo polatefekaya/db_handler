@@ -1,10 +1,9 @@
 package usecases
 
 import (
+	"DatabaseHandler/internals"
 	m "DatabaseHandler/pkg/data/models/Players"
 	q "DatabaseHandler/pkg/data/models/query"
-	h "DatabaseHandler/pkg/handlers"
-	log2 "DatabaseHandler/pkg/handlers/log"
 	"log"
 	"os"
 	sc "strconv"
@@ -15,8 +14,6 @@ type FootballUsecase struct {
 }
 
 var pq *q.Player
-
-var clog log2.CustomLog
 
 func NewFootballUsecase() *FootballUsecase {
 	pq = q.NewPlayer()
@@ -31,13 +28,13 @@ func (f *FootballUsecase) GetPlayerWithId(id int) *m.PlayerRoot {
 
 	key := os.Getenv("SPORTS_API_KEY")
 
-	sa := h.CreateSportsApi(key, query)
+	sa := internals.CreateSportsApi(key, query)
 	log.Println("Query", query)
 
-	body := h.GetRequest(sa)
+	body := internals.GetRequest(sa)
 
 	var pr m.PlayerRoot
-	h.FromJson(body, &pr)
+	internals.FromJson(body, &pr)
 
 	return &pr
 }

@@ -1,9 +1,9 @@
 package data
 
 import (
+	"DatabaseHandler/internals"
 	e "DatabaseHandler/pkg/data/entities/Players"
 	"DatabaseHandler/pkg/data/models/Players"
-	"DatabaseHandler/pkg/handlers"
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
@@ -47,32 +47,32 @@ func teamData(root *Players.PlayerRoot, page int) *e.TeamEntity {
 
 func dribbleData(root *Players.PlayerRoot, page int, statId string) *e.DribbleEntity {
 	ent := root.Responses[0].Statistics[page].Dribble.ToEntity()
-	return handlers.FillStatId(ent, statId)
+	return internals.FillStatId(ent, statId)
 }
 
 func goalData(root *Players.PlayerRoot, page int, statId string) *e.GoalEntity {
 	ent := root.Responses[0].Statistics[page].Goal.ToEntity()
-	return handlers.FillStatId(ent, statId)
+	return internals.FillStatId(ent, statId)
 }
 
 func cardData(root *Players.PlayerRoot, page int, statId string) *e.CardEntity {
 	ent := root.Responses[0].Statistics[page].Card.ToEntity()
-	return handlers.FillStatId(ent, statId)
+	return internals.FillStatId(ent, statId)
 }
 
 func duelData(root *Players.PlayerRoot, page int, statId string) *e.DuelEntity {
 	ent := root.Responses[0].Statistics[page].Duel.ToEntity()
-	return handlers.FillStatId(ent, statId)
+	return internals.FillStatId(ent, statId)
 }
 
 func foulData(root *Players.PlayerRoot, page int, statId string) *e.FoulEntity {
 	ent := root.Responses[0].Statistics[page].Foul.ToEntity()
-	return handlers.FillStatId(ent, statId)
+	return internals.FillStatId(ent, statId)
 }
 
 func gameData(root *Players.PlayerRoot, page int, statId string) *e.GameEntity {
 	ent := root.Responses[0].Statistics[page].Game.ToEntity()
-	return handlers.FillStatId(ent, statId)
+	return internals.FillStatId(ent, statId)
 }
 
 func leagueData(root *Players.PlayerRoot, page int) *e.LeagueEntity {
@@ -81,12 +81,12 @@ func leagueData(root *Players.PlayerRoot, page int) *e.LeagueEntity {
 
 func passData(root *Players.PlayerRoot, page int, statId string) *e.PassEntity {
 	ent := root.Responses[0].Statistics[page].Pass.ToEntity()
-	return handlers.FillStatId(ent, statId)
+	return internals.FillStatId(ent, statId)
 }
 
 func penaltyData(root *Players.PlayerRoot, page int, statId string) *e.PenaltyEntity {
 	ent := root.Responses[0].Statistics[page].Penalty.ToEntity()
-	return handlers.FillStatId(ent, statId)
+	return internals.FillStatId(ent, statId)
 }
 
 func statisticData(root *Players.PlayerRoot, playerId int) ([]*e.StatisticEntity, []*TempStatistic) {
@@ -164,15 +164,15 @@ func processBuffer(root *Players.PlayerRoot, i int) *TempStatistic {
 
 func shotData(root *Players.PlayerRoot, page int, statId string) *e.ShotEntity {
 	ent := root.Responses[0].Statistics[page].Shot.ToEntity()
-	return handlers.FillStatId(ent, statId)
+	return internals.FillStatId(ent, statId)
 }
 
 func substituteData(root *Players.PlayerRoot, page int, statId string) *e.SubstituteEntity {
 	ent := root.Responses[0].Statistics[page].Substitute.ToEntity()
-	return handlers.FillStatId(ent, statId)
+	return internals.FillStatId(ent, statId)
 }
 
 func tackleData(root *Players.PlayerRoot, page int, statId string) *e.TackleEntity {
 	ent := root.Responses[0].Statistics[page].Tackle.ToEntity()
-	return handlers.FillStatId(ent, statId)
+	return internals.FillStatId(ent, statId)
 }

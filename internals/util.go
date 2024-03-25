@@ -1,4 +1,4 @@
-package handlers
+package internals
 
 import "strings"
 
@@ -7,6 +7,6 @@ func Concat(s ...string) *string {
 	for _, el := range s {
 		b.WriteString(el)
 	}
-	var str string = b.String()
+	var str = b.String()
 	return &str
 }

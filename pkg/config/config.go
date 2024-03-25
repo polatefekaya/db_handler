@@ -1,8 +1,8 @@
 package config
 
 import (
+	"DatabaseHandler/internals/log"
 	"DatabaseHandler/pkg/data/models/Players"
-	"DatabaseHandler/pkg/handlers/log"
 	"DatabaseHandler/pkg/usecases"
 )
 

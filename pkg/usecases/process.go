@@ -1,7 +1,8 @@
 package usecases
 
 import (
-	"DatabaseHandler/pkg/handlers/process"
+	"DatabaseHandler/internals/log"
+	"DatabaseHandler/internals/process"
 )
 
 //make the request, process the data, upload to db
@@ -20,5 +21,5 @@ func NewProcess() *Process {
 func (m *Process) Start() {
 	pr := m.Football.GetPlayerWithId(203)
 	m.PlayerProcess.ProcessPlayer(pr)
-
+	log.INFO(pr.Responses[0].Player.Name)
 }

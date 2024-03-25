@@ -11,12 +11,15 @@ type CustomLog struct {
 	Log *slog.Logger
 }
 
+var initLog *CustomLog
+
 func newCustomLogger() *slog.Logger {
 	l := createLogger("json", "debug", os.Stderr)
 
 	return l
 }
 func NewSLog() *CustomLog {
+	initLog = &CustomLog{Log: newCustomLogger()}
 	return &CustomLog{
 		Log: newCustomLogger(),
 	}
@@ -28,4 +31,23 @@ func createLogger(hType, hLevel string, w io.Writer) *slog.Logger {
 		log.Panic("Handler is nil!")
 	}
 	return slog.New(*h)
+}
+
+func INFO(s string, a ...any) {
+	initLog.Log.Info(s, a...)
+}
+func DEBUG(s string, a ...any) {
+	initLog.Log.Debug(s, a...)
+}
+func WARN(s string, a ...any) {
+	initLog.Log.Warn(s, a...)
+}
+func (l *CustomLog) INFO(s string, a ...any) {
+	l.Log.Info(s, a...)
+}
+func (l *CustomLog) DEBUG(s string, a ...any) {
+	l.Log.Debug(s, a...)
+}
+func (l *CustomLog) WARN(s string, a ...any) {
+	l.Log.Warn(s, a...)
 }

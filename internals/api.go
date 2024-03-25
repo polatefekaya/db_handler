@@ -1,4 +1,6 @@
-package handlers
+package internals
+
+import "DatabaseHandler/internals/log"
 
 type Api struct {
 	Base    string
@@ -17,5 +19,6 @@ func CreateSportsApi(key, query string) *Api {
 		},
 		Key: key,
 	}
+	log.DEBUG(sa.Url, "base", sa.Base)
 	return &sa
 }

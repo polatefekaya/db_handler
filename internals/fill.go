@@ -1,4 +1,4 @@
-package handlers
+package internals
 
 import (
 	"reflect"
@@ -36,6 +36,5 @@ func FillStatId[a any](T a, id string) a {
 	if valid {
 		i.SetString(id)
 	}
-
 	return T
 }

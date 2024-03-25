@@ -1,9 +1,9 @@
-package handlers
+package internals
 
 import (
+	"DatabaseHandler/internals/generics"
 	"DatabaseHandler/pkg/data/entities/Players"
 	Players2 "DatabaseHandler/pkg/data/models/Players"
-	"DatabaseHandler/pkg/generics"
 	"log"
 	"reflect"
 )
@@ -21,7 +21,6 @@ func Generate[T generics.EntityConvertTypes](i T) interface{} {
 		log.Fatal("Given parameter can not be a nil value")
 	}
 	b := reflect.New(a).Elem()
-
 	if b.Kind() != reflect.Struct {
 		log.Fatal("Kinds not matching")
 	}

@@ -1,8 +1,8 @@
 package main
 
 import (
+	clog "DatabaseHandler/internals/log"
 	"DatabaseHandler/pkg/config"
-	clog "DatabaseHandler/pkg/handlers/log"
 	"DatabaseHandler/pkg/usecases"
 	env "github.com/joho/godotenv"
 	"log"
@@ -18,6 +18,7 @@ func main() {
 	Initialize(&app)
 
 	app.Automation.AutomatePlayer()
+	clog.INFO("app.Football.Query.PlayerId")
 }
 
 func Initialize(app *config.AppConfig) {

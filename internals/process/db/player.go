@@ -1,8 +1,8 @@
 package db
 
 import (
+	"DatabaseHandler/internals/process/data"
 	e "DatabaseHandler/pkg/data/entities/Players"
-	"DatabaseHandler/pkg/handlers/process/data"
 )
 
 type PlayerProcessDbHandler struct {
