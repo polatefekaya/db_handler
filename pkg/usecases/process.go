@@ -7,17 +7,19 @@ import (
 //make the request, process the data, upload to db
 
 type Process struct {
-	PlayerProcess *process.PlayerProcess
+	PlayerProcess   *process.PlayerProcess
+	FootballUsecase *FootballUsecase
 }
 
 func NewProcess() *Process {
 	return &Process{
-		PlayerProcess: process.NewPlayerProcess(),
+		PlayerProcess:   process.NewPlayerProcess(),
+		FootballUsecase: NewFootballUsecase(),
 	}
 }
 
 func (m *Process) Start() {
-
-	m.PlayerProcess.ProcessPlayer(404)
+	pr := m.FootballUsecase.GetPlayerWithId(203)
+	m.PlayerProcess.ProcessPlayer(pr)
 
 }

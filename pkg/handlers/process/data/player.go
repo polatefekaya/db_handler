@@ -3,21 +3,19 @@ package data
 import (
 	e "DatabaseHandler/pkg/data/entities/Players"
 	"DatabaseHandler/pkg/data/models/Players"
-	proc "DatabaseHandler/pkg/interfaces/process"
+	"DatabaseHandler/pkg/handlers"
 	"errors"
 	"fmt"
+	"github.com/google/uuid"
 	"log"
+	"time"
 )
 
 type PlayerProcessDataHandler struct {
 }
 
-type IPlayerDataProcess interface {
-	StartData(root *Players.PlayerRoot)
-	proc.IPlayerProcess
-}
-
-type tempEntities struct {
+type TempStatistic struct {
+	statisticId string
 	*e.TeamEntity
 	*e.LeagueEntity
 	*e.DribbleEntity
@@ -30,24 +28,13 @@ type tempEntities struct {
 	*e.PenaltyEntity
 	*e.SubstituteEntity
 	*e.TackleEntity
+	*e.ShotEntity
 }
 
-func (m *PlayerProcessDataHandler) StartData(root *Players.PlayerRoot) {
-	playerData(root)
-	teamData(root, 0)
-	dribbleData(root, 0)
-	statisticData(root)
-}
-
-func (m *PlayerProcessDataHandler) PlayerProcess() {
-}
-
-func (m *PlayerProcessDataHandler) LeagueProcess() {
-
-}
-
-func (m *PlayerProcessDataHandler) TeamProcess() {
-
+func (m *PlayerProcessDataHandler) StartData(root *Players.PlayerRoot) (*e.PlayerEntity, []*e.StatisticEntity, []*TempStatistic) {
+	pe := playerData(root)
+	se, ts := statisticData(root, pe.Id)
+	return pe, se, ts
 }
 
 func playerData(root *Players.PlayerRoot) *e.PlayerEntity {
@@ -58,54 +45,69 @@ func teamData(root *Players.PlayerRoot, page int) *e.TeamEntity {
 	return root.Responses[0].Statistics[page].Team.ToEntity()
 }
 
-func dribbleData(root *Players.PlayerRoot, page int) *e.DribbleEntity {
-	return root.Responses[0].Statistics[page].Dribble.ToEntity()
+func dribbleData(root *Players.PlayerRoot, page int, statId string) *e.DribbleEntity {
+	ent := root.Responses[0].Statistics[page].Dribble.ToEntity()
+	return handlers.FillStatId(ent, statId)
 }
 
-func goalData(root *Players.PlayerRoot, page int) *e.GoalEntity {
-	return root.Responses[0].Statistics[page].Goal.ToEntity()
+func goalData(root *Players.PlayerRoot, page int, statId string) *e.GoalEntity {
+	ent := root.Responses[0].Statistics[page].Goal.ToEntity()
+	return handlers.FillStatId(ent, statId)
 }
 
-func cardData(root *Players.PlayerRoot, page int) *e.CardEntity {
-	return root.Responses[0].Statistics[page].Card.ToEntity()
+func cardData(root *Players.PlayerRoot, page int, statId string) *e.CardEntity {
+	ent := root.Responses[0].Statistics[page].Card.ToEntity()
+	return handlers.FillStatId(ent, statId)
 }
 
-func duelData(root *Players.PlayerRoot, page int) *e.DuelEntity {
-	return root.Responses[0].Statistics[page].Duel.ToEntity()
+func duelData(root *Players.PlayerRoot, page int, statId string) *e.DuelEntity {
+	ent := root.Responses[0].Statistics[page].Duel.ToEntity()
+	return handlers.FillStatId(ent, statId)
 }
 
-func foulData(root *Players.PlayerRoot, page int) *e.FoulEntity {
-	return root.Responses[0].Statistics[page].Foul.ToEntity()
+func foulData(root *Players.PlayerRoot, page int, statId string) *e.FoulEntity {
+	ent := root.Responses[0].Statistics[page].Foul.ToEntity()
+	return handlers.FillStatId(ent, statId)
 }
 
-func gameData(root *Players.PlayerRoot, page int) *e.GameEntity {
-	return root.Responses[0].Statistics[page].Game.ToEntity()
+func gameData(root *Players.PlayerRoot, page int, statId string) *e.GameEntity {
+	ent := root.Responses[0].Statistics[page].Game.ToEntity()
+	return handlers.FillStatId(ent, statId)
 }
 
 func leagueData(root *Players.PlayerRoot, page int) *e.LeagueEntity {
 	return root.Responses[0].Statistics[page].League.ToEntity()
 }
 
-func passData(root *Players.PlayerRoot, page int) *e.PassEntity {
-	return root.Responses[0].Statistics[page].Pass.ToEntity()
+func passData(root *Players.PlayerRoot, page int, statId string) *e.PassEntity {
+	ent := root.Responses[0].Statistics[page].Pass.ToEntity()
+	return handlers.FillStatId(ent, statId)
 }
 
-func penaltyData(root *Players.PlayerRoot, page int) *e.PenaltyEntity {
-	return root.Responses[0].Statistics[page].Penalty.ToEntity()
+func penaltyData(root *Players.PlayerRoot, page int, statId string) *e.PenaltyEntity {
+	ent := root.Responses[0].Statistics[page].Penalty.ToEntity()
+	return handlers.FillStatId(ent, statId)
 }
 
-func statisticData(root *Players.PlayerRoot) {
+func statisticData(root *Players.PlayerRoot, playerId int) ([]*e.StatisticEntity, []*TempStatistic) {
 	es, err := entitiesProcess(root)
 	if err != nil {
 		log.Fatal(err)
-	}
-	//uuid.New()
 
+	}
+
+	sel := make([]*e.StatisticEntity, 0, cap(es))
+
+	for i := range len(es) {
+		sel = append(sel, makeStatEntity(es[i], playerId))
+	}
+
+	return sel, es
 }
 
-func entitiesProcess(root *Players.PlayerRoot) ([]*tempEntities, error) {
+func entitiesProcess(root *Players.PlayerRoot) ([]*TempStatistic, error) {
 	sl := len(root.Responses[0].Statistics)
-	es := make([]*tempEntities, 0, sl)
+	es := make([]*TempStatistic, 0, sl)
 	for i := range sl {
 		es = append(es, processBuffer(root, i))
 	}
@@ -116,28 +118,61 @@ func entitiesProcess(root *Players.PlayerRoot) ([]*tempEntities, error) {
 	return es, nil
 }
 
-func processBuffer(root *Players.PlayerRoot, i int) *tempEntities {
-	seo := tempEntities{
+func makeStatEntity(temp *TempStatistic, playerId int) *e.StatisticEntity {
+	se := e.StatisticEntity{
+		Id:           temp.statisticId,
+		PlayerId:     playerId,
+		TeamId:       temp.TeamEntity.Id,
+		LeagueId:     temp.LeagueEntity.Id,
+		GameId:       temp.GameEntity.Id,
+		SubstituteId: temp.SubstituteEntity.Id,
+		ShotId:       temp.ShotEntity.Id,
+		GoalId:       temp.GoalEntity.Id,
+		PassId:       temp.PassEntity.Id,
+		TackleId:     temp.TackleEntity.Id,
+		DuelId:       temp.DuelEntity.Id,
+		DribbleId:    temp.DribbleEntity.Id,
+		FoulId:       temp.FoulEntity.Id,
+		CardId:       temp.CardEntity.Id,
+		PenaltyId:    temp.PenaltyEntity.Id,
+		UpdatedAt:    time.Now().UTC(),
+		CreatedAt:    time.Now().UTC(),
+	}
+	return &se
+}
+
+func processBuffer(root *Players.PlayerRoot, i int) *TempStatistic {
+	statisticId := uuid.New().String()
+	seo := TempStatistic{
+		statisticId:      statisticId,
 		TeamEntity:       teamData(root, i),
 		LeagueEntity:     leagueData(root, i),
-		DribbleEntity:    dribbleData(root, i),
-		GoalEntity:       goalData(root, i),
-		CardEntity:       cardData(root, i),
-		DuelEntity:       duelData(root, i),
-		FoulEntity:       foulData(root, i),
-		GameEntity:       gameData(root, i),
-		PassEntity:       passData(root, i),
-		PenaltyEntity:    penaltyData(root, i),
-		SubstituteEntity: substituteData(root, i),
-		TackleEntity:     tackleData(root, i),
+		DribbleEntity:    dribbleData(root, i, statisticId),
+		GoalEntity:       goalData(root, i, statisticId),
+		CardEntity:       cardData(root, i, statisticId),
+		DuelEntity:       duelData(root, i, statisticId),
+		FoulEntity:       foulData(root, i, statisticId),
+		GameEntity:       gameData(root, i, statisticId),
+		PassEntity:       passData(root, i, statisticId),
+		PenaltyEntity:    penaltyData(root, i, statisticId),
+		SubstituteEntity: substituteData(root, i, statisticId),
+		TackleEntity:     tackleData(root, i, statisticId),
+		ShotEntity:       shotData(root, i, statisticId),
 	}
 	return &seo
 }
 
-func substituteData(root *Players.PlayerRoot, page int) *e.SubstituteEntity {
-	return root.Responses[0].Statistics[page].Substitute.ToEntity()
+func shotData(root *Players.PlayerRoot, page int, statId string) *e.ShotEntity {
+	ent := root.Responses[0].Statistics[page].Shot.ToEntity()
+	return handlers.FillStatId(ent, statId)
 }
 
-func tackleData(root *Players.PlayerRoot, page int) *e.TackleEntity {
-	return root.Responses[0].Statistics[page].Tackle.ToEntity()
+func substituteData(root *Players.PlayerRoot, page int, statId string) *e.SubstituteEntity {
+	ent := root.Responses[0].Statistics[page].Substitute.ToEntity()
+	return handlers.FillStatId(ent, statId)
+}
+
+func tackleData(root *Players.PlayerRoot, page int, statId string) *e.TackleEntity {
+	ent := root.Responses[0].Statistics[page].Tackle.ToEntity()
+	return handlers.FillStatId(ent, statId)
 }

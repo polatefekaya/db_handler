@@ -1,25 +1,13 @@
 package db
 
-import "DatabaseHandler/pkg/interfaces/process"
+import (
+	e "DatabaseHandler/pkg/data/entities/Players"
+	"DatabaseHandler/pkg/handlers/process/data"
+)
 
 type PlayerProcessDbHandler struct {
 }
 
-type IPlayerDbProcess interface {
-	StartDb()
-	process.IPlayerProcess
-}
-
-func (m *PlayerProcessDbHandler) StartDb() {
-
-}
-func (m *PlayerProcessDbHandler) PlayerProcess() {
-}
-
-func (m *PlayerProcessDbHandler) LeagueProcess() {
-
-}
-
-func (m *PlayerProcessDbHandler) TeamProcess() {
-
+func (m *PlayerProcessDbHandler) StartDb(pe *e.PlayerEntity, se []*e.StatisticEntity, ts []*data.TempStatistic) {
+	//make db calls
 }

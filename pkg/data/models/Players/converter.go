@@ -2,6 +2,7 @@ package Players
 
 import (
 	pe "DatabaseHandler/pkg/data/entities/Players"
+	"github.com/google/uuid"
 	"time"
 )
 
@@ -54,6 +55,7 @@ func (m *Team) ToEntity() *pe.TeamEntity {
 
 func (m *Card) ToEntity() *pe.CardEntity {
 	return &pe.CardEntity{
+		Id:        uuid.New().String(),
 		Yellow:    m.Yellow,
 		YellowRed: m.Yellowred,
 		Red:       m.Red,
@@ -64,6 +66,7 @@ func (m *Card) ToEntity() *pe.CardEntity {
 
 func (m *Dribble) ToEntity() *pe.DribbleEntity {
 	return &pe.DribbleEntity{
+		Id:         uuid.New().String(),
 		Attempts:   m.Attempts,
 		Successful: m.Success,
 		Past:       m.Past,
@@ -74,6 +77,7 @@ func (m *Dribble) ToEntity() *pe.DribbleEntity {
 
 func (m *Duel) ToEntity() *pe.DuelEntity {
 	return &pe.DuelEntity{
+		Id:        uuid.New().String(),
 		Total:     m.Total,
 		Won:       m.Total,
 		UpdatedAt: time.Now().UTC(),
@@ -83,6 +87,7 @@ func (m *Duel) ToEntity() *pe.DuelEntity {
 
 func (m *Foul) ToEntity() *pe.FoulEntity {
 	return &pe.FoulEntity{
+		Id:        uuid.New().String(),
 		Drawn:     m.Drawn,
 		Committed: m.Committed,
 		UpdatedAt: time.Now().UTC(),
@@ -92,6 +97,7 @@ func (m *Foul) ToEntity() *pe.FoulEntity {
 
 func (m *Game) ToEntity() *pe.GameEntity {
 	return &pe.GameEntity{
+		Id:          uuid.New().String(),
 		Appearances: m.Appearances,
 		Lineups:     m.Lineups,
 		Minutes:     m.Minutes,
@@ -106,6 +112,7 @@ func (m *Game) ToEntity() *pe.GameEntity {
 
 func (m *Goal) ToEntity() *pe.GoalEntity {
 	return &pe.GoalEntity{
+		Id:        uuid.New().String(),
 		Total:     m.Total,
 		Conceded:  m.Conceded,
 		Assists:   m.Assists,
@@ -117,6 +124,7 @@ func (m *Goal) ToEntity() *pe.GoalEntity {
 
 func (m *Pass) ToEntity() *pe.PassEntity {
 	return &pe.PassEntity{
+		Id:        uuid.New().String(),
 		Total:     m.Total,
 		Key:       m.Key,
 		Accuracy:  m.Accuracy,
@@ -127,6 +135,7 @@ func (m *Pass) ToEntity() *pe.PassEntity {
 
 func (m *Penalty) ToEntity() *pe.PenaltyEntity {
 	return &pe.PenaltyEntity{
+		Id:        uuid.New().String(),
 		Won:       m.Won,
 		Committed: m.Committed,
 		Scored:    m.Scored,
@@ -139,6 +148,7 @@ func (m *Penalty) ToEntity() *pe.PenaltyEntity {
 
 func (m *Substitute) ToEntity() *pe.SubstituteEntity {
 	return &pe.SubstituteEntity{
+		Id:        uuid.New().String(),
 		In:        m.In,
 		Out:       m.Out,
 		Bench:     m.Bench,
@@ -149,10 +159,21 @@ func (m *Substitute) ToEntity() *pe.SubstituteEntity {
 
 func (m *Tackle) ToEntity() *pe.TackleEntity {
 	return &pe.TackleEntity{
+		Id:            uuid.New().String(),
 		Total:         m.Total,
 		Blocks:        m.Blocks,
 		Interceptions: m.Interceptions,
 		UpdatedAt:     time.Now().UTC(),
 		CreatedAt:     time.Now().UTC(),
+	}
+}
+
+func (m *Shot) ToEntity() *pe.ShotEntity {
+	return &pe.ShotEntity{
+		Id:        uuid.New().String(),
+		Total:     m.Total,
+		On:        m.On,
+		CreatedAt: time.Now().UTC(),
+		UpdatedAt: time.Now().UTC(),
 	}
 }
