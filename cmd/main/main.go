@@ -13,11 +13,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	var app config.AppConfig
-	Initialize(&app)
+	//var app config.AppConfig
+	//Initialize(&app)
 
-	app.Automation.AutomatePlayer()
-
+	//app.Automation.AutomatePlayer()
+	l := usecases.NewCustomLogger()
+	l.Info("sdgsdgsgsadfafadfadgadgadg")
 }
 
 func Initialize(app *config.AppConfig) {
