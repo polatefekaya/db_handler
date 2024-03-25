@@ -1,3 +1,1 @@
 package usecases
-
-func NewCustomLogger() *

@@ -10,17 +10,10 @@ type AppConfig struct {
 	Conn       string
 	Football   *usecases.FootballUsecase
 	Automation *usecases.AutomationUseCase
+	Process    *usecases.Process
 	Logger     *log.CustomLog
 }
 
 type AppCache struct {
 	PlayerModel *Players.PlayerRoot
-}
-
-type Logger struct {
-	Log *log.CustomLog
-}
-
-func NewLogger() *Logger {
-	return &Logger{Log: log.NewSLog()}
 }

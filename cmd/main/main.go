@@ -24,8 +24,10 @@ func Initialize(app *config.AppConfig) {
 	app.Football = usecases.NewFootballUsecase()
 
 	app.Automation = usecases.NewAutomationUseCase()
-	app.Automation.FootballUsecase = app.Football
 	app.Automation.Process = usecases.NewProcess()
+	app.Automation.Process.Football = app.Football
+
+	app.Process = usecases.NewProcess()
 
 	app.Logger = clog.NewSLog()
 }

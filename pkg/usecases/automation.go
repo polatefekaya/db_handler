@@ -1,8 +1,7 @@
 package usecases
 
 type AutomationUseCase struct {
-	FootballUsecase *FootballUsecase
-	Process         *Process
+	Process *Process
 }
 
 func NewAutomationUseCase() *AutomationUseCase {
