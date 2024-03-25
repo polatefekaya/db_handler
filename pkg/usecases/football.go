@@ -4,6 +4,7 @@ import (
 	m "DatabaseHandler/pkg/data/models/Players"
 	q "DatabaseHandler/pkg/data/models/query"
 	h "DatabaseHandler/pkg/handlers"
+	log2 "DatabaseHandler/pkg/handlers/log"
 	"log"
 	"os"
 	sc "strconv"
@@ -14,6 +15,8 @@ type FootballUsecase struct {
 }
 
 var pq *q.Player
+
+var clog log2.CustomLog
 
 func NewFootballUsecase() *FootballUsecase {
 	pq = q.NewPlayer()

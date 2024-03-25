@@ -2,6 +2,7 @@ package main
 
 import (
 	"DatabaseHandler/pkg/config"
+	clog "DatabaseHandler/pkg/handlers/log"
 	"DatabaseHandler/pkg/usecases"
 	env "github.com/joho/godotenv"
 	"log"
@@ -13,12 +14,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	//var app config.AppConfig
-	//Initialize(&app)
+	var app config.AppConfig
+	Initialize(&app)
 
-	//app.Automation.AutomatePlayer()
-	l := usecases.NewCustomLogger()
-	l.Info("sdgsdgsgsadfafadfadgadgadg")
+	app.Automation.AutomatePlayer()
 }
 
 func Initialize(app *config.AppConfig) {
@@ -27,4 +26,6 @@ func Initialize(app *config.AppConfig) {
 	app.Automation = usecases.NewAutomationUseCase()
 	app.Automation.FootballUsecase = app.Football
 	app.Automation.Process = usecases.NewProcess()
+
+	app.Logger = clog.NewSLog()
 }
