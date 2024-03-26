@@ -22,6 +22,7 @@ func NewFootballUsecase() *FootballUsecase {
 }
 
 func (f *FootballUsecase) GetPlayerWithId(id int) *m.PlayerRoot {
+	log2.INFO("Get Player With ID started", "id", id)
 	query, err := pq.Generate(sc.Itoa(id), sc.Itoa(2023), "").Build()
 	if err != nil {
 		log.Fatal(err)

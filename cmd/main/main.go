@@ -9,6 +9,9 @@ import (
 )
 
 func main() {
+	var app config.AppConfig
+	app.Logger = clog.NewSLog()
+
 	clog.INFO("Application started")
 
 	err := env.Load()
@@ -17,7 +20,6 @@ func main() {
 	}
 	clog.INFO("Environment loaded")
 
-	var app config.AppConfig
 	Initialize(&app)
 
 	app.Automation.AutomatePlayer()
@@ -32,5 +34,4 @@ func Initialize(app *config.AppConfig) {
 
 	app.Process = usecases.NewProcess()
 
-	app.Logger = clog.NewSLog()
 }

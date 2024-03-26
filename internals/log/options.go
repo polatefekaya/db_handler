@@ -1,12 +1,19 @@
 package log
 
-import "log/slog"
+import (
+	"log/slog"
+	"strings"
+)
 
 var logLevel = map[string]slog.Level{
-	"debug": slog.LevelDebug,
-	"info":  slog.LevelInfo,
-	"warn":  slog.LevelWarn,
-	"error": slog.LevelError,
+	"debug":     slog.LevelDebug,
+	"deepDebug": slog.LevelDebug,
+	"info":      slog.LevelInfo,
+	"deepInfo":  slog.LevelInfo,
+	"warn":      slog.LevelWarn,
+	"deepWarn":  slog.LevelWarn,
+	"error":     slog.LevelError,
+	"deepError": slog.LevelError,
 }
 
 type Options struct {
@@ -14,8 +21,9 @@ type Options struct {
 }
 
 func newHandlerOptions(level string) *slog.HandlerOptions {
+	var as = strings.Contains(strings.ToLower(level), "deep")
 	return &slog.HandlerOptions{
-		AddSource: true,
+		AddSource: as,
 		Level:     logLevel[level],
 	}
 }

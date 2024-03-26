@@ -19,6 +19,6 @@ func CreateSportsApi(key, query string) *Api {
 		},
 		Key: key,
 	}
-	log.DEBUG("Api Object generated", "Api Object", sa)
+	log.DEBUG("Api Object generated")
 	return &sa
 }
