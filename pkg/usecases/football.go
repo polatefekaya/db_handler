@@ -2,6 +2,7 @@ package usecases
 
 import (
 	"DatabaseHandler/internals"
+	log2 "DatabaseHandler/internals/log"
 	m "DatabaseHandler/pkg/data/models/Players"
 	q "DatabaseHandler/pkg/data/models/query"
 	"log"
@@ -26,10 +27,11 @@ func (f *FootballUsecase) GetPlayerWithId(id int) *m.PlayerRoot {
 		log.Fatal(err)
 	}
 
+	log2.INFO("Query generated", "Query: ", query)
+
 	key := os.Getenv("SPORTS_API_KEY")
 
 	sa := internals.CreateSportsApi(key, query)
-	log.Println("Query", query)
 
 	body := internals.GetRequest(sa)
 

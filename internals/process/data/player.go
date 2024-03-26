@@ -2,6 +2,7 @@ package data
 
 import (
 	"DatabaseHandler/internals"
+	log2 "DatabaseHandler/internals/log"
 	e "DatabaseHandler/pkg/data/entities/Players"
 	"DatabaseHandler/pkg/data/models/Players"
 	"errors"
@@ -38,58 +39,73 @@ func (m *PlayerProcessDataHandler) StartData(root *Players.PlayerRoot) (*e.Playe
 }
 
 func playerData(root *Players.PlayerRoot) *e.PlayerEntity {
-	return root.Responses[0].Player.ToEntity()
+	pe := root.Responses[0].Player.ToEntity()
+	log2.DEBUG("Processing model to entity ", "Entity: ", pe)
+	return pe
 }
 
 func teamData(root *Players.PlayerRoot, page int) *e.TeamEntity {
-	return root.Responses[0].Statistics[page].Team.ToEntity()
+	te := root.Responses[0].Statistics[page].Team.ToEntity()
+	log2.DEBUG("Processing model to entity ", "Entity: ", te)
+	return te
+}
+
+func leagueData(root *Players.PlayerRoot, page int) *e.LeagueEntity {
+	le := root.Responses[0].Statistics[page].League.ToEntity()
+	log2.DEBUG("Processing model to entity ", "Entity: ", le)
+	return le
 }
 
 func dribbleData(root *Players.PlayerRoot, page int, statId string) *e.DribbleEntity {
 	ent := root.Responses[0].Statistics[page].Dribble.ToEntity()
+	log2.DEBUG("Processing model to entity ", "Entity: ", ent)
 	return internals.FillStatId(ent, statId)
 }
 
 func goalData(root *Players.PlayerRoot, page int, statId string) *e.GoalEntity {
 	ent := root.Responses[0].Statistics[page].Goal.ToEntity()
+	log2.DEBUG("Processing model to entity ", "Entity: ", ent)
 	return internals.FillStatId(ent, statId)
 }
 
 func cardData(root *Players.PlayerRoot, page int, statId string) *e.CardEntity {
 	ent := root.Responses[0].Statistics[page].Card.ToEntity()
+	log2.DEBUG("Processing model to entity ", "Entity: ", ent)
 	return internals.FillStatId(ent, statId)
 }
 
 func duelData(root *Players.PlayerRoot, page int, statId string) *e.DuelEntity {
 	ent := root.Responses[0].Statistics[page].Duel.ToEntity()
+	log2.DEBUG("Processing model to entity ", "Entity: ", ent)
 	return internals.FillStatId(ent, statId)
 }
 
 func foulData(root *Players.PlayerRoot, page int, statId string) *e.FoulEntity {
 	ent := root.Responses[0].Statistics[page].Foul.ToEntity()
+	log2.DEBUG("Processing model to entity ", "Entity: ", ent)
 	return internals.FillStatId(ent, statId)
 }
 
 func gameData(root *Players.PlayerRoot, page int, statId string) *e.GameEntity {
 	ent := root.Responses[0].Statistics[page].Game.ToEntity()
+	log2.DEBUG("Processing model to entity ", "Entity: ", ent)
 	return internals.FillStatId(ent, statId)
-}
-
-func leagueData(root *Players.PlayerRoot, page int) *e.LeagueEntity {
-	return root.Responses[0].Statistics[page].League.ToEntity()
 }
 
 func passData(root *Players.PlayerRoot, page int, statId string) *e.PassEntity {
 	ent := root.Responses[0].Statistics[page].Pass.ToEntity()
+	log2.DEBUG("Processing model to entity ", "Entity: ", ent)
 	return internals.FillStatId(ent, statId)
 }
 
 func penaltyData(root *Players.PlayerRoot, page int, statId string) *e.PenaltyEntity {
 	ent := root.Responses[0].Statistics[page].Penalty.ToEntity()
+	log2.DEBUG("Processing model to entity ", "Entity: ", ent)
 	return internals.FillStatId(ent, statId)
 }
 
 func statisticData(root *Players.PlayerRoot, playerId int) ([]*e.StatisticEntity, []*TempStatistic) {
+	log2.INFO("Statistic data process started.")
 	es, err := entitiesProcess(root)
 	if err != nil {
 		log.Fatal(err)
@@ -108,6 +124,7 @@ func statisticData(root *Players.PlayerRoot, playerId int) ([]*e.StatisticEntity
 func entitiesProcess(root *Players.PlayerRoot) ([]*TempStatistic, error) {
 	sl := len(root.Responses[0].Statistics)
 	es := make([]*TempStatistic, 0, sl)
+	log2.INFO("Statistic temporary slice generated.", "Capacity: ", sl)
 	for i := range sl {
 		es = append(es, processBuffer(root, i))
 	}
@@ -115,6 +132,7 @@ func entitiesProcess(root *Players.PlayerRoot) ([]*TempStatistic, error) {
 	if len(es) != sl {
 		return nil, errors.New(fmt.Sprintf("Entities Process couldn't process everything. Expected Len: %d, Got: %d", sl, len(es)))
 	}
+	log2.INFO("Statistic temporary slice filled")
 	return es, nil
 }
 
@@ -138,6 +156,7 @@ func makeStatEntity(temp *TempStatistic, playerId int) *e.StatisticEntity {
 		UpdatedAt:    time.Now().UTC(),
 		CreatedAt:    time.Now().UTC(),
 	}
+	log2.DEBUG("Processing model to entity ", "Entity: ", se)
 	return &se
 }
 
@@ -164,15 +183,18 @@ func processBuffer(root *Players.PlayerRoot, i int) *TempStatistic {
 
 func shotData(root *Players.PlayerRoot, page int, statId string) *e.ShotEntity {
 	ent := root.Responses[0].Statistics[page].Shot.ToEntity()
+	log2.DEBUG("Processing model to entity ", "Entity: ", ent)
 	return internals.FillStatId(ent, statId)
 }
 
 func substituteData(root *Players.PlayerRoot, page int, statId string) *e.SubstituteEntity {
 	ent := root.Responses[0].Statistics[page].Substitute.ToEntity()
+	log2.DEBUG("Processing model to entity ", "Entity: ", ent)
 	return internals.FillStatId(ent, statId)
 }
 
 func tackleData(root *Players.PlayerRoot, page int, statId string) *e.TackleEntity {
 	ent := root.Responses[0].Statistics[page].Tackle.ToEntity()
+	log2.DEBUG("Processing model to entity ", "Entity: ", ent)
 	return internals.FillStatId(ent, statId)
 }

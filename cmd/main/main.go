@@ -9,16 +9,18 @@ import (
 )
 
 func main() {
+	clog.INFO("Application started")
+
 	err := env.Load()
 	if err != nil {
 		log.Fatal(err)
 	}
+	clog.INFO("Environment loaded")
 
 	var app config.AppConfig
 	Initialize(&app)
 
 	app.Automation.AutomatePlayer()
-	clog.INFO("app.Football.Query.PlayerId")
 }
 
 func Initialize(app *config.AppConfig) {

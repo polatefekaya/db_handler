@@ -14,7 +14,7 @@ type CustomLog struct {
 var initLog *CustomLog
 
 func newCustomLogger() *slog.Logger {
-	l := createLogger("json", "debug", os.Stderr)
+	l := createLogger("json", "info", os.Stderr)
 
 	return l
 }

@@ -18,10 +18,9 @@ func NewPlayerProcess() *PlayerProcess {
 }
 
 func (m *PlayerProcess) ProcessPlayer(root *Players.PlayerRoot) {
+	log2.INFO("General player process started")
 	pe, se, ts := m.Data.StartData(root)
+	log2.INFO("General player process ended with, ", "Player", pe.Id, "Statistics", se)
 	//m.Db.StartDb(pe, se, ts)
-	log2.WithUsers().INFO("DENEME")
-	log.Println(pe.Id)
-	log.Println(se[0].ShotId)
 	log.Println(ts[0].TeamEntity.Name)
 }
